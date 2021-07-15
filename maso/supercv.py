@@ -2,7 +2,7 @@ from cv2 import cv2 as cv
 import numpy as np
 import time
 import math
-from AI_model import *
+from .AI_model import *
 import pandas as pd
 
 def showimg_by_path(image_path):

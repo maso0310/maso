@@ -1,6 +1,6 @@
-from supercv import *
-from superos import *
-from AI_model import *
+from .supercv import *
+from .superos import *
+from .AI_model import *
 
 
 print('''
