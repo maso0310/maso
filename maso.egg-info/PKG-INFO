@@ -1,0 +1,15 @@
+Metadata-Version: 1.1
+Name: maso
+Version: 1.0
+Summary: Make any image file to ascii art format.
+Home-page: https://github.com/Henry0526/ascii_image
+Author: Maso
+Author-email: balimon@hotmail.com
+License: MIT
+Description: UNKNOWN
+Keywords: maso
+Platform: UNKNOWN
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
