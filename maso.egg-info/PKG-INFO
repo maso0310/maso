@@ -1,11 +1,11 @@
 Metadata-Version: 1.1
 Name: maso
-Version: 1.0
-Summary: Make any image file to ascii art format.
-Home-page: https://github.com/Henry0526/ascii_image
+Version: 1.1
+Summary: 方便使用OPENCV包的套件
+Home-page: https://github.com/maso0310/maso/tree/master
 Author: Maso
 Author-email: balimon@hotmail.com
-License: MIT
+License: MIT License
 Description: UNKNOWN
 Keywords: maso
 Platform: UNKNOWN
