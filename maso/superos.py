@@ -8,3 +8,6 @@ def check_dir(dirpath):
 
 def check_file(filepath):
     return os.path.isfile(filepath)
+
+if check_dir('./AI_model')==False:
+    create_dir('./AI_model')
