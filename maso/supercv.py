@@ -39,7 +39,7 @@ def YCrCb(img_array):
 def calculator_HMC(img_path):
     o = cv.imread(img_path)
     _shape = o.shape
-    image_name='test'
+    image_name=img_path
 
     if o.shape[0]<o.shape[1]:
         print('此為橫向照片，不符合規格')
