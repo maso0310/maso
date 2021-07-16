@@ -17,3 +17,4 @@ if check_dir('./AI_model')==False:
     with open('./AI_model/HMC_svr_model.pkl','wb') as f:
         f.write(res.content)
         f.close()
+
