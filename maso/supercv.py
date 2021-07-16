@@ -47,7 +47,7 @@ def calculator_HMC(img_path):
     elif o.shape[0]>o.shape[1]:
         o = cv.resize(o,(720,1280))
         _shape = o.shape
-        print('調整圖檔大小：',_shape)
+        #print('調整圖檔大小：',_shape)
 
     total_area = o.shape[0]*o.shape[1]
 
@@ -70,7 +70,7 @@ def calculator_HMC(img_path):
 
     vertex = []
     total_area = o.shape[0] * o.shape[1]
-    print("總面積:",total_area)
+#    #print("總面積:",total_area)
 
     for i in range(n):
         M = cv.moments(contours[i])
@@ -87,16 +87,16 @@ def calculator_HMC(img_path):
                     coordinate_x_list.append(coordinate.flatten()[0])
                     coordinate_y_list.append(coordinate.flatten()[1])
 
-    if e==0:
-        print('未偵測到黑色校正色版')
-    elif e!=0:
-        print("偵測到黑色校正色版的數量：",e)
+#    if e==0:
+#        #print('未偵測到黑色校正色版')
+#    elif e!=0:
+#        #print("偵測到黑色校正色版的數量：",e)
 
     vertex.append(tuple([np.min(coordinate_x_list),np.min(coordinate_y_list)]))
     vertex.append(tuple([np.min(coordinate_x_list),np.max(coordinate_y_list)]))
     vertex.append(tuple([np.max(coordinate_x_list),np.min(coordinate_y_list)]))
     vertex.append(tuple([np.max(coordinate_x_list),np.max(coordinate_y_list)]))
-    print(vertex[0],vertex[1],vertex[2],vertex[3])
+#    #print(vertex[0],vertex[1],vertex[2],vertex[3])
 
     v1 = vertex[0]
     v2 = vertex[1]
@@ -132,7 +132,7 @@ def calculator_HMC(img_path):
     mean_list,quartile_list = CIs_calculator(shadow_img,image_name)
 
     mean_list = mean_list + constrast_mean_list + ck_value_list
-    print(mean_list)
+    ##print(mean_list)
     #估算HMC
     HMC = HMC_estimate(mean_list)
 
@@ -141,7 +141,7 @@ def calculator_HMC(img_path):
     fertility = 50
     #估算GC
     rice_spiceies=1
-    #print(rice_spiceies)
+    ##print(rice_spiceies)
     #grain_counter = Grain_Counter(mean_list,fertility,rice_spiceies,shadow_img,image_name)
     grain_counter = 100
 
@@ -151,7 +151,7 @@ def calculator_HMC(img_path):
 
 def read_checker(image,image_name):
     start_time = time.time()
-    print('{}_讀取校正板'.format(image_name))
+    ##print('{}_讀取校正板'.format(image_name))
     ck_value_list = []
     o = image
     gray = cv.cvtColor(o,cv.COLOR_BGR2GRAY)
@@ -164,7 +164,7 @@ def read_checker(image,image_name):
     checker_position=[]
     q=0
     total_area = o.shape[0] * o.shape[1]
-    print('\nROI(I)總面積:',total_area)
+    ##print('\nROI(I)總面積:',total_area)
 
     for i in range(n):
         M = cv.moments(contours[i])
@@ -180,16 +180,16 @@ def read_checker(image,image_name):
                 q+=1
 
     checker_position.sort(key = lambda s: s[1])
-    print("偵測到的校正板個數%d"%(q))
+    ##print("偵測到的校正板個數%d"%(q))
 
     if q==2:
         checker_position.insert(1,(int((checker_position[0][0]+checker_position[1][0])/2),int((checker_position[0][1]+checker_position[1][1])/2)))
 
-    if q!=3:
-        print("******************圖片%s，沒有偵測到三個校正板*************************"%(image_name))
-    print("校正板的中心點位置list:",checker_position)
+#    if q!=3:
+        #print("******************圖片%s，沒有偵測到三個校正板*************************"%(image_name))
+    ##print("校正板的中心點位置list:",checker_position)
 
-    print('校正板中心點位置=\n',checker_position)
+    ##print('校正板中心點位置=\n',checker_position)
 
     g=checker_position[0]
     black_ck = o[g[1]-30:g[1]+30,g[0]-30:g[0]+30]
@@ -209,17 +209,17 @@ def read_checker(image,image_name):
     ck_value_list.append(white_value)
 
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
     return black_ck,gray_ck,white_ck,ck_value_list
 
 #=======================================================================對比校正===========================================================================
 
 def constrast_correction(o,image_name,black,gray,white):
     start_time = time.time()
-    print('{}_對比校正'.format(image_name))
+    #print('{}_對比校正'.format(image_name))
 
     img = o.copy()
-    print(img.dtype)
+    #print(img.dtype)
     Bb,Bg,Br = cv.split(black)
     Wb,Wg,Wr = cv.split(white)
 
@@ -231,8 +231,8 @@ def constrast_correction(o,image_name,black,gray,white):
     W_g = np.array(Wg).flatten()
     W_b = np.array(Wb).flatten()
 
-    print(B_r.min(),B_g.min(),B_b.min())
-    print(W_r.max(),W_g.max(),W_b.max())
+    #print(B_r.min(),B_g.min(),B_b.min())
+    #print(W_r.max(),W_g.max(),W_b.max())
 
 
     img_bl = np.zeros(img.shape)
@@ -249,7 +249,7 @@ def constrast_correction(o,image_name,black,gray,white):
 
     #result_img = img
     result_img = 255*(img-img_bl)/(img_w-img_bl)
-    print(result_img.dtype)
+    #print(result_img.dtype)
 
     path = './constrast.png'
     cv.imwrite(path,result_img)
@@ -267,14 +267,14 @@ def constrast_correction(o,image_name,black,gray,white):
     v2 = (0,Halation_img.shape[0])
     v3 = (Halation_img.shape[1],0)
     v4 = (Halation_img.shape[1],Halation_img.shape[0])
-    print(Halation_img.dtype)
+    #print(Halation_img.dtype)
 
     #擷取ROI
     ROI_2 = ROI_cropped(Halation_img,image_name,v1,v2,v3,v4)
-#    print(ROI_2.shape)
-    print(ROI_2)
-    print(ROI_2.shape)
-    print(ROI_2.dtype)
+#    #print(ROI_2.shape)
+    #print(ROI_2)
+    #print(ROI_2.shape)
+    #print(ROI_2.dtype)
     ROI_2 = ROI_2.astype(np.dtype('uint8'))
 
 
@@ -289,14 +289,14 @@ def constrast_correction(o,image_name,black,gray,white):
     mean_list,quartile_list = CIs_calculator(shadow_img,image_name)
 
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
 
     return mean_list,quartile_list
 #=======================================================================gamma校正===========================================================================
 
 def gamma_correction(image,image_name,gray):
     start_time = time.time()
-    print('{}_Gamma校正'.format(image_name))
+    #print('{}_Gamma校正'.format(image_name))
     B,G,R = cv.split(gray)
     
     r1 = math.log10(119)/math.log10(R.mean())
@@ -310,24 +310,24 @@ def gamma_correction(image,image_name,gray):
     img[:,:,0] = 255*((img[:,:,0]/255)**r3)
 
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
     return img
 
 #=======================================================================光暈去除===========================================================================
 
 def halation_removal(image,image_name):
     start_time = time.time()
-    print('{}_光暈去除'.format(image_name))
+    #print('{}_光暈去除'.format(image_name))
     o = image
     img = o.copy()
     
-#    print(img[0,0])
-#    print(np.std(img[0,0]))
+#    #print(img[0,0])
+#    #print(np.std(img[0,0]))
     img[np.std(img[:,:])<35]=0
 
     different = cv.subtract(o, img)
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
     return img
 
 
@@ -335,7 +335,7 @@ def halation_removal(image,image_name):
 
 def ROI_cropped(image,image_name,v1,v2,v3,v4):
     start_time = time.time()
-    print('{}截取ROI'.format(image_name))
+    #print('{}截取ROI'.format(image_name))
     ROI_vertex_x=[v1[0],v2[0],v3[0],v4[0]]
     ROI_vertex_x.sort()
     ROI_vertex_y=[v1[1],v2[1],v3[1],v4[1]]
@@ -344,16 +344,16 @@ def ROI_cropped(image,image_name,v1,v2,v3,v4):
     img = o.copy()
 
     imCrop = img[ROI_vertex_y[0]:ROI_vertex_y[3],ROI_vertex_x[0]:ROI_vertex_x[3]-130]
-#    print(imCrop.shape)
+#    #print(imCrop.shape)
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
     return imCrop
 
 #=======================================================================去除藍繩與白三角====================================================================
 
 def bluerubber_removal(image,image_name):
     start_time = time.time()
-    print('{}_去除背景與綠葉'.format(image_name))
+    #print('{}_去除背景與綠葉'.format(image_name))
     o = image
     img = o.copy()
 
@@ -383,7 +383,7 @@ def bluerubber_removal(image,image_name):
 
     img[int(img.shape[0]*0.85):,int(img.shape[1]*0.8):] = 0
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
 
     return img
 
@@ -391,21 +391,21 @@ def bluerubber_removal(image,image_name):
 
 def shadow_removal(image,image_name):
     start_time = time.time()
-    print('{}_去除陰影'.format(image_name))
+    #print('{}_去除陰影'.format(image_name))
     o = image
     img = o.copy()
     gray = cv.cvtColor(img,cv.COLOR_BGR2GRAY)
 
     img[gray[:,:]<120]=0
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
     return img
 
 #=======================================================================計算CIs===========================================================================
 
 def CIs_calculator(image,image_name):
     start_time = time.time()
-    print('{}_計算CIs'.format(image_name))
+    #print('{}_計算CIs'.format(image_name))
     paddy_image = image
 
     total=0
@@ -428,7 +428,7 @@ def CIs_calculator(image,image_name):
             elif a<30 and b<30 and c<30:
                 lower+=1
             else:
-                #print(paddy_image[i,j])
+                ##print(paddy_image[i,j])
                 new.append(paddy_image[i,j])
                 NDI_pixel.append((float(b)-float(c))/(float(b)+float(c)))#NDI = (G-R)/(G+R)
                 GI_pixel.append(float(b)/float(c))#GI = G/R
@@ -471,7 +471,7 @@ def CIs_calculator(image,image_name):
     B = np.percentile(b,[25,50,75])
     G = np.percentile(g,[25,50,75])
     R = np.percentile(r,[25,50,75])
-#    print(B,G,R)
+#    #print(B,G,R)
     H1,S1,V1 = cv.split(cv.cvtColor(new_image,cv.COLOR_BGR2HSV))
     H2,L2,S2 = cv.split(cv.cvtColor(new_image,cv.COLOR_BGR2HLS))
     L3,a3,b3 = cv.split(cv.cvtColor(new_image,cv.COLOR_BGR2Lab))
@@ -502,12 +502,12 @@ def CIs_calculator(image,image_name):
             max_x_point.append(i)
             max_y_point.append(H[i])
 
-    print("最高點x位置：",max_x_point)
-    print("最高點y位置：",max_y_point)
+    #print("最高點x位置：",max_x_point)
+    #print("最高點y位置：",max_y_point)
 
     n = len(max_x_point)
     ratio=[]
-    print('波峰的數量：',n)
+    #print('波峰的數量：',n)
     if n>1:
         if max_y_point[0]<max_y_point[1]:
             ratio.append(0)
@@ -542,7 +542,7 @@ def CIs_calculator(image,image_name):
     GI = np.percentile(GI,[25,50,75])
     RGRI = np.percentile(RGRI,[25,50,75])
     end_time = time.time()
-    print("處理的時間{}秒".format(round(end_time-start_time,2)))
+    #print("處理的時間{}秒".format(round(end_time-start_time,2)))
 
     quartile_list = [
         H_sharp_ratio,
