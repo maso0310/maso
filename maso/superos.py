@@ -1,6 +1,6 @@
 import os 
 
-current_file_path = os.getcwd()
+current_file_path = os.path.dirname(__file__)
 AI_Model_path = os.path.join(current_file_path,'AI_model')
 
 '''

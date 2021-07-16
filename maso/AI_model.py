@@ -1,9 +1,11 @@
 import joblib #jbolib模块
 import requests 
+import os
 
 def HMC_estimate(X):
     #读取Model
-    SVR = joblib.load('./AI_model/HMC_svr_model.pkl')
+    path = os.path.dirname(__file__)
+    SVR = joblib.load(path+'/AI_model/HMC_svr_model.pkl')
 
     X = [X]
     #测试读取后的Model
