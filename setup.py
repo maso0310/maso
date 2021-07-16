@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
     name='maso',
-    version='1.6',
+    version='1.5',
     description='方便使用OPENCV包的套件',
     url='https://github.com/maso0310/maso/tree/master',
     author='Maso',
